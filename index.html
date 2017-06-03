@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html ng-app="myapp">
+<head>
+    <base href="/">
+    <title> Cloud System </title>
+    <script src="https://code.jquery.com/jquery-3.2.1.js"
+            integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE=" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.4/angular-route.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-file-upload/2.5.0/angular-file-upload.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.4/socket.io.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.20.0/vis.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.3.11/js/app.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.20.0/vis.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+          integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.3.11/css/AdminLTE.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.3.11/css/skins/skin-blue.css"/>
+
+    <script src="js/app.js"></script>
+    <script src="js/route.js"></script>
+
+    <script src="js/controller/NavigationCtrl.js"></script>
+
+    <script src="js/controller/DashboardCtrl.js"></script>
+    <script src="js/controller/WorldCtrl.js"></script>
+    <script src="js/controller/WorldGroupCtrl.js"></script>
+    <!--<script src="js/controller/DaemonsCtrl.js"></script>
+        <script src="js/controller/PluginsCtrl.js"></script>
+
+        <script src="js/controller/ServertypesCtrl.js"></script>
+        <script src="js/controller/SettingsCtrl.js"></script>-->
+    <link rel="stylesheet" href="css/bootstrap-edit.css">
+    <style>
+        .page-loader {
+            position: absolute;
+            top: calc(50% - 40px);
+            left: calc(50% - 40px);
+            width: 50px;
+            height: 50px;
+            font-size: 16pt;
+            text-align: center;
+            line-height: 50px;
+            z-index: 5000;
+            color: #FFFFFF;
+        }
+    </style>
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper" ng-controller="NavigationCtrl">
+
+    <div class="page-loader" ng-show="!$root.domContentLoaded">
+        <div class="cssload-thecube">
+            <div class="cssload-cube cssload-c1"></div>
+            <div class="cssload-cube cssload-c2"></div>
+            <div class="cssload-cube cssload-c4"></div>
+            <div class="cssload-cube cssload-c3"></div>
+        </div>
+    </div>
+    <header class="main-header">
+        <a class="logo">
+            <span class="logo-mini">CS</span>
+            <span class="logo-lg"><b>CloudSystem</b></span>
+        </a>
+
+        <nav class="navbar navbar-static-top" role="navigation">
+            <a class="sidebar-toggle" data-toggle="offcanvas" role="button">
+                <span class="sr-only">Toggle navigation</span>
+            </a>
+            <div class="navbar-custom-menu">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a style="cursor: pointer; transition: background 0.25s ease-in;">ilouHD</a>
+                    </li>
+                    <li style="margin-right: 20px;">
+                        <a style="cursor: pointer; transition: background 0.25s ease-in;"><i class="fa fa-sign-out"></i></a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <aside class="main-sidebar">
+        <section class="sidebar">
+            <ul class="sidebar-menu tree" data-widget="tree">
+                <li class="header">NAVIGATION</li>
+
+                <li ng-class="{ active: isActive('mcs.page.dashboard') }"><a href="#/dashboard"><i
+                        class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
+                <li class="treeview">
+                    <a href="!">
+                        <i class="fa fa-users"></i> <span>Gruppen</span>
+                        <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+                    </a>
+                    <ul class="treeview-menu" style="display: none;">
+                        <li ng-class="{ active: isActive('mcs.page.groups.bcg') }"><a href="#"><i
+                                class="fa fa-server"></i>Bungeecord Gruppen</a></li>
+                        <li ng-class="{ active: isActive('mcs.page.groups.sg') }"><a href="#"><i
+                                class="fa fa-server"></i>Server Gruppen</a></li>
+                        <li ng-class="{ active: isActive('mcs.page.groups.sysg') }"><a href="#"><i
+                                class="fa fa-circle-o"></i>System Gruppen</a></li>
+                        <li ng-class="{ active: isActive('mcs.page.groups.plg') }"><a href="#"><i
+                                class="fa fa-plug"></i>Plugin Gruppen</a></li>
+                        <li ng-class="{ active: isActive('mcs.page.groups.worldg') }"><a href="#/worldgroups"><i
+                                class="fa fa-globe"></i>Welten Gruppen</a></li>
+                    </ul>
+                </li>
+                <li ng-class="{ active: isActive('mcs.page.worlds') }"><a href="#/worlds"><i class="fa fa-globe"></i>
+                    <span>Welten</span></a></li>
+                <li ><a data-toggle="control-sidebar"><i
+                        class="fa fa-gears"></i> <span>Settings</span></a></li>
+            </ul>
+        </section>
+    </aside>
+
+    <div class="content-wrapper">
+        <section class="content">
+            <div class="callout" ng-class="$root.callout" ng-show="$root.callout != ''"
+                 ng-click="$root.removeCallout();">
+                <h4>{{ $root.calloutTitle }}</h4>
+                <p>{{ $root.calloutMessage }}</p>
+            </div>
+            <div ng-view ng-show="$root.domContentLoaded"></div>
+        </section>
+    </div>
+    <footer class="main-footer">
+        <strong>{{Version}}</strong> (No Updates available)
+        <br/><span style="color: #039000;"><i class="fa fa-check-circle-o"></i></span> &nbsp; System online (no errors
+        last hour) &nbsp; <span style="color: #039000;"><i class="fa fa-check-circle-o"></i></span>
+    </footer>
+    <!--<aside class="control-sidebar control-sidebar-dark">
+        <!-- Create the tabs
+        <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
+            <li class="active"><a href="#control-sidebar-theme-demo-options-tab" data-toggle="tab"><i class="fa fa-wrench"></i></a></li><li><a href="#control-sidebar-home-tab" data-toggle="tab"><i class="fa fa-home"></i></a></li>
+            <li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gears"></i></a></li>
+        </ul>
+        <!-- Tab panes
+        <div class="tab-content">
+            <!-- Home tab content
+            <!-- /.tab-pane
+        </div>
+    </aside>-->
+</div>
+</body>
+</html>				
