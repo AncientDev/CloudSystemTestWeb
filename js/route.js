@@ -24,7 +24,7 @@ app.config(function($routeProvider, $locationProvider) {
             templateUrl: 'parts/groups/system.html',
             upi: 'mcs.page.groups.sysg'
         })
-		.when(('/plgroups'|| '/'), {
+		.when(('/pluginsgroups'|| '/'), {
             templateUrl: 'parts/groups/plugin.html',
             upi: 'mcs.page.groups.plg'
         })

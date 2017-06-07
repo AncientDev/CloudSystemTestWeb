@@ -1,9 +1,10 @@
 app.controller('DashboardCtrl', ['$rootScope', '$scope', 'Socket', function($rootScope, $scope, Socket) {
-	
+
 
     $rootScope.setLoading(true);
 	var json = { page: "dashboard" };
     Socket.emit("page-req",json );
+    Socket.emit("lastHour-stats-req",new Date().getTime());
 
     Socket.on("page-res", function(data) {
         if(data.state == "error") {
@@ -23,6 +24,17 @@ app.controller('DashboardCtrl', ['$rootScope', '$scope', 'Socket', function($roo
         $rootScope.setLoading(false);
 
     });
+    var ctx = $("#lastHourPlayers").get(0).getContext("2d");
+    Socket.on("lastHour-stats-res", function(data) {
+        var myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: data.label,
+                datasets: data.dataset
+            }
+        });
+    });
+
 
     /*var playersOnline = [];
     var last = 1950;
