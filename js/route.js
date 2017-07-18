@@ -2,7 +2,7 @@ app.config(function($routeProvider, $locationProvider) {
     $routeProvider
         .when(('/dashboard' || '/'), {
             templateUrl: 'parts/dashboard.html',
-            upi: 'mcs.page.dashboard',
+            upi: 'mcs.page.dashboard'
         })
         .when(('/plugins' || '/'), {
             templateUrl: 'parts/plugins.html',
@@ -12,7 +12,7 @@ app.config(function($routeProvider, $locationProvider) {
             templateUrl: 'parts/worlds.html',
             upi: 'mcs.page.worlds'
         })
-        .when(('/bungeecrodgroups'|| '/'), {
+        .when(('/bungeecordgroups'|| '/'), {
             templateUrl: 'parts/groups/bungeecord.html',
             upi: 'mcs.page.groups.bcg'
         })
@@ -24,7 +24,7 @@ app.config(function($routeProvider, $locationProvider) {
             templateUrl: 'parts/groups/system.html',
             upi: 'mcs.page.groups.sysg'
         })
-		.when(('/pluginsgroups'|| '/'), {
+		.when(('/plugingroups'|| '/'), {
             templateUrl: 'parts/groups/plugin.html',
             upi: 'mcs.page.groups.plg'
         })
